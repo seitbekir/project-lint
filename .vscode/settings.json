@@ -1,0 +1,5 @@
+{
+    "vscodeGitCommit.template": [
+        "{prefix}: #{issue} - {message}"
+    ]
+}

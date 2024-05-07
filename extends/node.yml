@@ -1,0 +1,124 @@
+rules:
+  # Roots
+  projectlint_root:
+    - name: /^\.projectlintrc(\.(json|yaml|yml))?$/
+      type: file
+  jest_root:
+    - name: coverage
+      type: dir
+      ignoreChildren: true
+    - name: /^jest\..*\.(js|mjs|cjs|ts)$/
+      type: file
+  git_root:
+    - name: .git
+      type: dir
+      ignoreChildren: true
+    - name: .gitignore
+      type: file
+  ide_roots:
+    - name: .vscode
+      type: dir
+      ignoreChildren: true
+    - name: .idea
+      type: dir
+      ignoreChildren: true
+    - name: .editorconfig
+      type: file
+  webpack_root:
+    - name: /^webpack\.config\.(js|ts)$/
+      type: file
+    - name: /^webpack.*\.(js|ts)$/
+      type: file
+  vite_root:
+    - name: /^vite\.config\.(js|cjs|mjs|ts)$/
+      type: file
+  ts_root:
+    - name: /^tsconfig(\..*)?\.json$/
+      type: file
+    - name: /^tsconfig\..*\.tsbuildinfo$/
+      type: file
+  eslint_root:
+    - name: /^\.eslintrc(\..*)?$/
+      type: file
+    - name: /^eslint\.config(\..*)?\.(js|mjs|cjs)$/
+      type: file
+    - name: .eslintignore
+      type: file
+    - name: .eslintcache
+      type: file
+  prettier_root:
+    - name: /^\.prettierrc(\..*)?$/
+      type: file
+    - name: .prettierignore
+      type: file
+  stylelint_root:
+    - name: /^\.stylelintrc(\..*)?$/
+      type: file
+    - name: .stylelintignore
+      type: file
+  babel_root:
+    - name: /^babel(\..*)?\.(js|json)$/
+      type: file
+  node_root:
+    - name: node_modules
+      type: dir
+      ignoreChildren: true
+    - name: package.json
+      type: file
+  npm_root:
+    - ruleId: node_root
+    - name: package-lock.json
+      type: file
+    - name: npm-shrinkwrap.json
+      type: file
+    - name: .npmrc
+      type: file
+  yarn_root:
+    - ruleId: node_root
+    - name: yarn.lock
+      type: file
+  pnpm_root:
+    - ruleId: node_root
+    - name: pnpm-lock.yaml
+      type: file
+  bun_root:
+    - ruleId: node_root
+    - name: bunfig.toml
+      type: file
+    - name: bun-lock.json
+      type: file
+    - name: bun.lockb
+      type: file
+  nvm_root:
+    - name: .nvmrc
+      type: file
+    - name: .node-version
+      type: file
+  basic_root:
+    - name: README.md
+      type: file
+    - name: LICENSE
+      type: file
+    - name: CHANGELOG.md
+      type: file
+    - name: CONTRIBUTING.md
+      type: file
+    - name: AUTHORS
+      type: file
+  env_root:
+    - name: /^\.env(\..*)?$/
+      type: file
+  moon_root:
+    - name: /^moon\.(yml|yaml|json)$/
+      type: file
+    - name: .moon
+      type: dir
+      ignoreChildren: true
+  lintstaged_root:
+    - name: /^\.lintstagedrc(\.(json|yaml|yml|mjs|cjs|js))?$/
+      type: file
+    - name: /^lint-staged\.config\.(mjs|cjs|js)$/
+      type: file
+    - name: .husky
+      type: dir
+      ignoreChildren: true

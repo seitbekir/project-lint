@@ -1,0 +1,157 @@
+{
+  "$ref": "#/definitions/ProjectLintConfig",
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "definitions": {
+    "DedicatedRules": {
+      "additionalProperties": {
+        "description": "Rules by id",
+        "items": {
+          "$ref": "#/definitions/RuleMapped"
+        },
+        "type": "array"
+      },
+      "type": "object"
+    },
+    "ProjectLintConfig": {
+      "additionalProperties": false,
+      "properties": {
+        "extends": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "items": {
+                "type": "string"
+              },
+              "type": "array"
+            }
+          ],
+          "description": "Include external configuration to be overridden"
+        },
+        "gitignore": {
+          "default": false,
+          "description": "Include `.gitignore` file to ignore patterns",
+          "type": "boolean"
+        },
+        "ignorePatterns": {
+          "description": "Ignore patterns",
+          "items": {
+            "type": "string"
+          },
+          "type": "array"
+        },
+        "root": {
+          "description": "Root rules (in working directory)",
+          "items": {
+            "$ref": "#/definitions/Rule"
+          },
+          "type": "array"
+        },
+        "rules": {
+          "$ref": "#/definitions/DedicatedRules",
+          "description": "Dedicated rules definitions"
+        },
+        "workdir": {
+          "default": "process.cwd()",
+          "description": "Working directory",
+          "type": "string"
+        }
+      },
+      "required": ["root"],
+      "type": "object"
+    },
+    "Rule": {
+      "anyOf": [
+        {
+          "$ref": "#/definitions/RuleRuleId"
+        },
+        {
+          "$ref": "#/definitions/RuleAllowAny"
+        },
+        {
+          "$ref": "#/definitions/RuleFile"
+        },
+        {
+          "$ref": "#/definitions/RuleDir"
+        }
+      ]
+    },
+    "RuleAllowAny": {
+      "additionalProperties": false,
+      "properties": {
+        "allowAny": {
+          "description": "If no rule matched, allow any file/folder on this dir",
+          "type": "boolean"
+        }
+      },
+      "required": ["allowAny"],
+      "type": "object"
+    },
+    "RuleDir": {
+      "additionalProperties": false,
+      "properties": {
+        "children": {
+          "description": "Rules for children of this folder",
+          "items": {
+            "$ref": "#/definitions/Rule"
+          },
+          "type": "array"
+        },
+        "ignoreChildren": {
+          "description": "Ignore children for this folder, except explained in `children`",
+          "type": "boolean"
+        },
+        "name": {
+          "description": "Rule name for folder instances",
+          "type": "string"
+        },
+        "type": {
+          "const": "dir",
+          "type": "string"
+        }
+      },
+      "required": ["name", "type"],
+      "type": "object"
+    },
+    "RuleFile": {
+      "additionalProperties": false,
+      "properties": {
+        "name": {
+          "description": "Rule name for file instances",
+          "type": "string"
+        },
+        "type": {
+          "const": "file",
+          "type": "string"
+        }
+      },
+      "required": ["name", "type"],
+      "type": "object"
+    },
+    "RuleMapped": {
+      "anyOf": [
+        {
+          "$ref": "#/definitions/RuleAllowAny"
+        },
+        {
+          "$ref": "#/definitions/RuleFile"
+        },
+        {
+          "$ref": "#/definitions/RuleDir"
+        }
+      ]
+    },
+    "RuleRuleId": {
+      "additionalProperties": false,
+      "properties": {
+        "ruleId": {
+          "description": "Including dedicated rules by id (from `rules` object)",
+          "type": "string"
+        }
+      },
+      "required": ["ruleId"],
+      "type": "object"
+    }
+  }
+}

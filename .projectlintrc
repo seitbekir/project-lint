@@ -1,0 +1,102 @@
+workdir: .
+
+gitignore: true
+
+ignorePatterns:
+  - node_modules
+  - .husky
+  - .git
+
+extends: extends/node.yml
+
+root:
+  - ruleId: index_file
+  - ruleId: jest_folder
+  - ruleId: project_root
+  - ruleId: lintstaged_root
+  - ruleId: github_folder
+  - name: projectlintrc.schema.json
+    type: file
+  - name: extends
+    type: dir
+    children:
+      - name: /^${{camelCase}}.(yml|yaml|json)$/
+        type: file
+  - name: src
+    type: dir
+    children:
+      - ruleId: jest_folder
+      - name: cli.ts
+        type: file
+      - name: runner.ts
+        type: file
+      - ruleId: index_file
+      - name: errors
+        type: dir
+        children:
+          - ruleId: jest_folder
+          - ruleId: index_file
+          - name: /^${{PascalCase}}Error.ts$/
+            type: file
+      - name: helpers
+        type: dir
+        children:
+          - ruleId: jest_folder
+          - name: /^${{camelCase}}.ts$/
+            type: file
+      - name: types
+        type: dir
+        children:
+          - ruleId: jest_folder
+          - name: /^${{camelCase}}.ts$/
+            type: file
+      - name: utils
+        type: dir
+        children:
+          - ruleId: jest_folder
+          - name: /^${{camelCase}}.ts$/
+            type: file
+      - name: validators
+        type: dir
+        children:
+          - ruleId: jest_folder
+          - name: /^${{camelCase}}.ts$/
+            type: file
+
+rules:
+  # Defaults
+  jest_folder:
+    - name: __tests__
+      type: dir
+      ignoreChildren: true
+    - name: __mocks__
+      type: dir
+      ignoreChildren: true
+  github_folder:
+    - name: .github
+      type: dir
+      children:
+        - name: workflows
+          type: dir
+          children:
+            - name: pull_request.yml
+              type: file
+            - name: npm_publish.yml
+              type: file
+
+  # My rules
+  project_root:
+    - ruleId: basic_root
+    - ruleId: projectlint_root
+    - ruleId: jest_root
+    - ruleId: ide_roots
+    - ruleId: ts_root
+    - ruleId: eslint_root
+    - ruleId: prettier_root
+    - ruleId: npm_root
+    - ruleId: nvm_root
+    - ruleId: git_root
+
+  index_file:
+    - name: index.ts
+      type: file
