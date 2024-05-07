@@ -1,6 +1,6 @@
 {
   "name": "@seitbekir/project-lint",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "type": "module",
   "keywords": [
     "project-lint",
@@ -45,7 +45,7 @@
     }
   },
   "bin": {
-    "project-lint": "lib/cli.js"
+    "project-lint": "./lib/cli.js"
   },
   "repository": {
     "type": "git",
