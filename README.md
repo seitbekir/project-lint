@@ -24,7 +24,7 @@ The code was inspired by [the dead project](https://github.com/Igorkowalski94/es
 ## Installation
 
 ```bash
-$ npm i @seitbekir/project-lint
+$ npm i project-lint
 ```
 
 ## Usage
@@ -149,11 +149,11 @@ root:
 ```
 
 ```yaml
-$schema: ./node_modules/@seitbekir/project-lint/projectlintrc.schema.json
+$schema: ./node_modules/project-lint/projectlintrc.schema.json
 workdir: .
 gitignore: true
 
-extends: ./node_modules/@seitbekir/project-lint/extends/rules.yml
+extends: ./node_modules/project-lint/extends/rules.yml
 
 ignorePatterns:
   - src/legacy
@@ -213,7 +213,7 @@ Type checking for your '.projectlintrc'. It helps to fill configuration correctl
 
 ```jsonc
 {
-  "$schema": "./node_modules/@seitbekir/project-lint/projectlintrc.schema.json",
+  "$schema": "./node_modules/project-lint/projectlintrc.schema.json",
   // ...
 }
 ```
@@ -278,7 +278,7 @@ All the included content may be described in other 2 fields: `ignoreChildren` or
 
 #### `ignoreChildren: <boolean>` <a id="rule-dir-ignoreChildren"></a>
 
-All the included filed will pass successfully.
+All the included files will pass successfully.
 
 ```yaml
 - name: dirname
@@ -395,7 +395,7 @@ Will expect the following:
 
 ### `${{ParentName}}`
 
-Use the same name as the parent folder, but the first letter must be lowercase.
+Use the same name as the parent folder, but the first letter must be uppercase.
 
 ```yaml
 - name: Batman

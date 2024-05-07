@@ -1,6 +1,6 @@
 {
-  "name": "@seitbekir/project-lint",
-  "version": "0.0.3",
+  "name": "project-lint",
+  "version": "0.0.4",
   "type": "module",
   "keywords": [
     "project-lint",
