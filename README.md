@@ -213,7 +213,7 @@ Type checking for your '.projectlintrc'. It helps to fill configuration correctl
 
 ```jsonc
 {
-  "$schema": "./node_modules/eslint-plugin-project-structure/projectlintrc.schema.json",
+  "$schema": "./node_modules/@seitbekir/project-lint/projectlintrc.schema.json",
   // ...
 }
 ```
@@ -258,7 +258,7 @@ File rule must contain 2 fields: `name` and `type: file`.
 ```yaml
 - name: filename.ts
   type: file
-- name: /^file${{PascalCase}}.ts$/
+- name: /^file${{PascalCase}}\.ts$/
   type: file
 ```
 
@@ -272,7 +272,7 @@ All the included content may be described in other 2 fields: `ignoreChildren` or
 ```yaml
 - name: dirname
   type: dir
-- name: /^dir${{PascalCase}}.ts$/
+- name: /^dir${{PascalCase}}\.ts$/
   type: dir
 ```
 
