@@ -58,9 +58,3 @@ jobs:
         run: npm run ci.prettier -- --check .
       - name: Run tests
         run: npm run test.ci
-      - name: Archive code coverage results
-        if: ${{ !cancelled() && hashFiles('coverage/cobertura-coverage.xml') != '' }}
-        uses: actions/upload-artifact@v4
-        with:
-          name: coverage
-          path: coverage
