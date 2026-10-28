@@ -1,0 +1,5 @@
+rules:
+  semaphore_root:
+    - name: .semaphore
+      type: dir
+      ignoreChildren: true

@@ -1,0 +1,4 @@
+rules:
+  nevercode_root:
+    - name: nevercode.yml
+      type: file

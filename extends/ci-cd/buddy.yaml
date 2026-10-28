@@ -1,0 +1,9 @@
+rules:
+  buddy_root:
+    - name: .buddy.yml
+      type: file
+    - name: buddy.yml
+      type: file
+    - name: .buddy
+      type: dir
+      ignoreChildren: true

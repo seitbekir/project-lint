@@ -1,0 +1,13 @@
+extends: ./node.yaml
+
+rules:
+  npm_root:
+    - ruleId: node_root
+    - name: package-lock.json
+      type: file
+    - name: npm-shrinkwrap.json
+      type: file
+    - name: .npmrc
+      type: file
+    - name: .npmignore
+      type: file

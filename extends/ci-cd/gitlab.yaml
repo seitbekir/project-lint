@@ -1,0 +1,7 @@
+rules:
+  gitlab_root:
+    - name: /^\.gitlab-ci\.ya?ml$/
+      type: file
+    - name: .gitlab
+      type: dir
+      ignoreChildren: true

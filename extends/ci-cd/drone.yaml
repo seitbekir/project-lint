@@ -1,0 +1,4 @@
+rules:
+  drone_root:
+    - name: /^\.drone\.(yml|yaml|jsonnet|star)$/
+      type: file

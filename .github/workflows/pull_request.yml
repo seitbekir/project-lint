@@ -2,27 +2,29 @@ on:
   push:
     branches:
       - main
-    paths-ignore:
-      - 'package.json'
   pull_request:
     branches:
       - main
-    paths-ignore:
-      - 'package.json'
+
+permissions:
+  contents: read
 
 jobs:
   build:
     strategy:
       matrix:
         os: [ubuntu-latest, windows-latest]
-        node-version: ['18.x', '20.x']
+        node-version: ['22.x', '24.x']
 
     runs-on: ${{ matrix.os }}
 
     steps:
-      - uses: actions/checkout@v2
+      - name: Enable symlinks on Windows
+        if: runner.os == 'Windows'
+        run: git config --global core.symlinks true
+      - uses: actions/checkout@v6
       - name: Use Node.js ${{ matrix.node-version }}
-        uses: actions/setup-node@v2
+        uses: actions/setup-node@v6
         with:
           node-version: ${{ matrix.node-version }}
       - name: Install dependencies
@@ -34,28 +36,25 @@ jobs:
 
   unit-tests:
     runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      code-quality: write
 
     steps:
-      - uses: actions/checkout@v2
-      - name: Use Node.js 20.x
-        uses: actions/setup-node@v2
+      - uses: actions/checkout@v6
         with:
-          node-version: '20.x'
+          ref: ${{ github.event.pull_request.head.sha || github.sha }}
+      - name: Use Node.js 24.x
+        uses: actions/setup-node@v6
+        with:
+          node-version: '24.x'
       - name: Install dependencies
         run: npm ci
+      - name: Check types
+        run: npm run ci.typecheck
+      - name: Check lint
+        run: npm run ci.eslint -- src eslint.config.js jest.config.ts lint-staged.config.cjs
+      - name: Check formatting
+        run: npm run ci.prettier -- --check .
       - name: Run tests
         run: npm run test.ci
-      - name: Archive code coverage results
-        uses: actions/upload-artifact@v4
-        with:
-          name: coverage
-          path: coverage
-      - name: Generate Code Coverage report
-        id: code-coverage
-        uses: barecheck/code-coverage-action@v1
-        with:
-          barecheck-github-app-token: ${{ secrets.BARECHECK_GITHUB_APP_TOKEN }}
-          barecheck-api-key: ${{ secrets.BARECHECK_API_KEY }}
-          lcov-file: './coverage/lcov.info'
-          send-summary-comment: ${{ vars.COVERAGE_COMMENT == 'true' }}
-          show-annotations: ${{ vars.COVERAGE_ANNOTATIONS }}

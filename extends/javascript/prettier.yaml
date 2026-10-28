@@ -1,0 +1,8 @@
+rules:
+  prettier_root:
+    - name: /^\.prettierrc(\..*)?$/
+      type: file
+    - name: /^prettier\.config\.(js|mjs|cjs|ts|mts|cts)$/
+      type: file
+    - name: .prettierignore
+      type: file

@@ -1,0 +1,12 @@
+rules:
+  basic_root:
+    - name: README.md
+      type: file
+    - name: LICENSE
+      type: file
+    - name: CHANGELOG.md
+      type: file
+    - name: CONTRIBUTING.md
+      type: file
+    - name: AUTHORS
+      type: file

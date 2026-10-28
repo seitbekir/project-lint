@@ -1,0 +1,6 @@
+rules:
+  babel_root:
+    - name: /^babel(\..*)?\.(js|mjs|cjs|json)$/
+      type: file
+    - name: /^\.babelrc(\.(js|mjs|cjs|json))?$/
+      type: file

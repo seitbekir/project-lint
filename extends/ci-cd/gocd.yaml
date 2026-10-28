@@ -1,0 +1,4 @@
+rules:
+  gocd_root:
+    - name: /^.*\.gocd\.(yml|yaml|json)$/
+      type: file

@@ -1,0 +1,6 @@
+rules:
+  buildbot_root:
+    - name: master.cfg
+      type: file
+    - name: buildbot.tac
+      type: file

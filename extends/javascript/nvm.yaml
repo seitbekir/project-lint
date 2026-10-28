@@ -1,0 +1,6 @@
+rules:
+  nvm_root:
+    - name: .nvmrc
+      type: file
+    - name: .node-version
+      type: file

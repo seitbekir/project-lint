@@ -1,0 +1,5 @@
+rules:
+  circleci_root:
+    - name: .circleci
+      type: dir
+      ignoreChildren: true

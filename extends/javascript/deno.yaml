@@ -1,0 +1,8 @@
+rules:
+  deno_root:
+    - name: /^deno\.jsonc?$/
+      type: file
+    - name: deno.lock
+      type: file
+    - name: import_map.json
+      type: file

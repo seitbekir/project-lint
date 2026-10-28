@@ -1,0 +1,6 @@
+rules:
+  codeship_root:
+    - name: codeship-services.yml
+      type: file
+    - name: codeship-steps.yml
+      type: file

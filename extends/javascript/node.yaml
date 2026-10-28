@@ -1,0 +1,7 @@
+rules:
+  node_root:
+    - name: node_modules
+      type: dir
+      ignoreChildren: true
+    - name: package.json
+      type: file

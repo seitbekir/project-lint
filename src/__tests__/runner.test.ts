@@ -1,3 +1,5 @@
+import { readFileSync } from 'node:fs';
+import { dirname, resolve } from 'node:path';
 import { Command } from 'commander';
 import { globbySync } from 'globby';
 
@@ -36,6 +38,14 @@ describe('CLI', () => {
   beforeEach(() => {
     program = new Command();
     defineCLI(program);
+  });
+
+  it('should use the package version', () => {
+    const packageRoot = dirname(dirname(__dirname));
+    const packageJsonPath = resolve(packageRoot, 'package.json');
+    const packageJson = JSON.parse(readFileSync(packageJsonPath, 'utf8')) as { version: string };
+
+    expect(program.version()).toBe(packageJson.version);
   });
 
   it('should call main function with correct options', async () => {

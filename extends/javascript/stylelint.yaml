@@ -1,0 +1,10 @@
+rules:
+  stylelint_root:
+    - name: /^\.stylelintrc(\..*)?$/
+      type: file
+    - name: /^stylelint\.config\.(js|mjs|cjs|ts|mts|cts)$/
+      type: file
+    - name: .stylelintignore
+      type: file
+    - name: .stylelintcache
+      type: file

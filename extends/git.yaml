@@ -1,0 +1,11 @@
+rules:
+  git_root:
+    - name: .git
+      type: dir
+      ignoreChildren: true
+    - name: .gitignore
+      type: file
+    - name: .gitattributes
+      type: file
+    - name: .gitmodules
+      type: file

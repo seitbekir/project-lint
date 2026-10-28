@@ -1,0 +1,7 @@
+rules:
+  vitest_root:
+    - name: /^vitest\.(config|workspace)\.(js|mjs|cjs|ts|mts|cts)$/
+      type: file
+    - name: coverage
+      type: dir
+      ignoreChildren: true

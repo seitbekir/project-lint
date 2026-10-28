@@ -1,0 +1,5 @@
+rules:
+  teamcity_root:
+    - name: .teamcity
+      type: dir
+      ignoreChildren: true

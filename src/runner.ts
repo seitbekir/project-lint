@@ -6,7 +6,7 @@ import { checkConfig } from './utils/checkConfig';
 import { runOnFiles } from './utils/runOnFiles';
 import { outError } from './utils/outError';
 
-const version = '0.0.1';
+const version = '0.0.5';
 
 export type Options = {
   config: string;

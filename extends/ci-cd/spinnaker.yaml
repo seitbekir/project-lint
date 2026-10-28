@@ -1,0 +1,8 @@
+rules:
+  spinnaker_root:
+    - name: .spinnaker
+      type: dir
+      ignoreChildren: true
+    - name: spinnaker
+      type: dir
+      ignoreChildren: true
