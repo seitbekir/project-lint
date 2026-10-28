@@ -1,0 +1,4 @@
+rules:
+  projectlint_root:
+    - name: /^\.projectlintrc(\.(json|yaml|yml))?$/
+      type: file

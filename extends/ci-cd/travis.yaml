@@ -1,0 +1,4 @@
+rules:
+  travis_root:
+    - name: .travis.yml
+      type: file

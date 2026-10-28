@@ -18,10 +18,11 @@ The code was inspired by [the dead project](https://github.com/Igorkowalski94/es
 
 - Sub-folder level `.projectlintrc`.
 - URL based `extends`.
-- Default `extends`.
 - Updatable `regexpPatterns`.
 
 ## Installation
+
+Requires Node.js 22.12 or newer. Use Node.js 24 for development (see `.nvmrc`).
 
 ```bash
 $ npm i project-lint
@@ -153,7 +154,12 @@ $schema: ./node_modules/project-lint/projectlintrc.schema.json
 workdir: .
 gitignore: true
 
-extends: ./node_modules/project-lint/extends/rules.yml
+extends:
+  - project-lint/extends/basic.yaml
+  - project-lint/extends/projectlint.yaml
+  - project-lint/extends/git.yaml
+  - project-lint/extends/javascript/eslint.yaml
+  - project-lint/extends/javascript/webpack.yaml
 
 ignorePatterns:
   - src/legacy
@@ -237,7 +243,108 @@ ignorePatterns:
 
 ### `extends: <string | string[]>` (optional) <a id="extends"></a>
 
-List of other YAML or JSON files with the rules. It will be recursively included and overridden by the current file. You may extend <a href="#rules">`rules`</a>, <a href="#ignorePatterns">`ignorePatterns`</a>, but it won't include <a href="#gitignore">`gitignore: true`</a>.
+List of other YAML or JSON files with the rules. Local paths are resolved relative to the declaring config; built-in package specifiers such as `project-lint/extends/javascript/pnpm.yaml` are also supported. It will be recursively included and overridden by the current file. You may extend <a href="#rules">`rules`</a>, <a href="#ignorePatterns">`ignorePatterns`</a>, but it won't include <a href="#gitignore">`gitignore: true`</a>.
+
+### Built-in presets
+
+Import only the presets used by your project. Presets define named `rules`; activate them in `root` with `ruleId`.
+
+```yaml
+extends:
+  - project-lint/extends/javascript/pnpm.yaml
+  - project-lint/extends/javascript/biome.yaml
+  - project-lint/extends/javascript/typescript.yaml
+  - project-lint/extends/ci-cd/gitlab.yaml
+
+root:
+  - ruleId: pnpm_root
+  - ruleId: biome_root
+  - ruleId: ts_root
+  - ruleId: gitlab_root
+  - name: src
+    type: dir
+    ignoreChildren: true
+```
+
+Each package manager preset includes `node.yaml`, which defines `node_root` for `package.json` and `node_modules`. Shared extensions are loaded once per configuration, including when several package managers are imported. Circular extensions report a configuration error.
+
+There are no aggregate JavaScript or CI/CD presets. Replace the old `extends/node.yml` import with the individual presets you need; existing rule identifiers remain unchanged except `ide_roots`, which is replaced by `editorconfig_root`, `vscode_root`, `idea_root`, and `zed_root`.
+
+#### General project presets
+
+These presets apply to any project and live directly in `node_modules/project-lint/extends/`.
+
+| Preset              | Rule ID             | Supported files and directories                                      |
+| ------------------- | ------------------- | -------------------------------------------------------------------- |
+| `moon.yaml`         | `moon_root`         | `moon.yml`, `moon.yaml`, `moon.json`, `.moon/`                       |
+| `git.yaml`          | `git_root`          | `.git/`, `.gitignore`, `.gitattributes`, `.gitmodules`               |
+| `editorconfig.yaml` | `editorconfig_root` | `.editorconfig`                                                      |
+| `basic.yaml`        | `basic_root`        | `README.md`, `LICENSE`, `CHANGELOG.md`, `CONTRIBUTING.md`, `AUTHORS` |
+| `env.yaml`          | `env_root`          | Environment file names                                               |
+| `projectlint.yaml`  | `projectlint_root`  | `.projectlintrc` and JSON/YAML variants                              |
+
+#### JavaScript and TypeScript tools
+
+All paths below are relative to `node_modules/project-lint/extends/javascript/`. The repository also provides the relative symlink `extends/typescript → javascript`; published packages expose the same presets through `project-lint/extends/typescript/*`. npm does not include directory symlinks in tarballs, so use package specifiers for the TypeScript alias.
+
+| Preset             | Rule ID                                 | Supported files and directories                                                                   |
+| ------------------ | --------------------------------------- | ------------------------------------------------------------------------------------------------- |
+| `node.yaml`        | `node_root`                             | `package.json`, `node_modules/`                                                                   |
+| `npm.yaml`         | `npm_root`                              | Node.js files, npm lockfiles, `.npmrc`, `.npmignore`                                              |
+| `pnpm.yaml`        | `pnpm_root`                             | Node.js files, `pnpm-lock.yaml`, `pnpm-workspace.yaml`, `pnpmfile.cjs`, `.pnpmfile.cjs`, `.npmrc` |
+| `yarn.yaml`        | `yarn_root`                             | Node.js files, `yarn.lock`, `.yarnrc`, `.yarnrc.yml`, `.yarn/`, Plug'n'Play files                 |
+| `bun.yaml`         | `bun_root`                              | Node.js files, `bunfig.toml`, `bun.lock`, `bun.lockb`, `bun-lock.json`                            |
+| `deno.yaml`        | `deno_root`                             | `deno.json`, `deno.jsonc`, `deno.lock`, `import_map.json`                                         |
+| `oxc.yaml`         | `oxc_root`, `oxlint_root`, `oxfmt_root` | Oxlint and Oxfmt JSON/JSONC configs and `*.config.ts` / `*.config.mts`                            |
+| `rsbuild.yaml`     | `rsbuild_root`                          | `rsbuild.config.*` in JavaScript, ESM, CommonJS and TypeScript                                    |
+| `rspack.yaml`      | `rspack_root`                           | `rspack.config.*` in JavaScript, ESM, CommonJS and TypeScript                                     |
+| `biome.yaml`       | `biome_root`                            | `biome.json`, `biome.jsonc`                                                                       |
+| `eslint.yaml`      | `eslint_root`                           | Legacy and flat configs, including TypeScript, ignore and cache files                             |
+| `prettier.yaml`    | `prettier_root`                         | `.prettierrc*`, `prettier.config.*`, `.prettierignore`                                            |
+| `stylelint.yaml`   | `stylelint_root`                        | `.stylelintrc*`, `stylelint.config.*`, ignore and cache files                                     |
+| `typescript.yaml`  | `ts_root`                               | `tsconfig*.json`, `*.tsbuildinfo`                                                                 |
+| `jest.yaml`        | `jest_root`                             | `jest.*` configs, including TypeScript and JSON, `coverage/`                                      |
+| `vitest.yaml`      | `vitest_root`                           | `vitest.config.*`, `vitest.workspace.*`, `coverage/`                                              |
+| `vite.yaml`        | `vite_root`                             | `vite.config.*`, including ESM, CommonJS and TypeScript variants                                  |
+| `webpack.yaml`     | `webpack_root`                          | `webpack*.js`, `.mjs`, `.cjs`, `.ts`, `.mts`, `.cts`                                              |
+| `babel.yaml`       | `babel_root`                            | `babel.*` configs and `.babelrc*`                                                                 |
+| `husky.yaml`       | `husky_root`                            | `.husky/`                                                                                         |
+| `lint-staged.yaml` | `lintstaged_root`                       | `.lintstagedrc*`, `lint-staged.config.*`, Husky files                                             |
+| `nvm.yaml`         | `nvm_root`                              | `.nvmrc`, `.node-version`                                                                         |
+
+#### IDEs
+
+Import individual editor presets from `node_modules/project-lint/extends/ides/`.
+
+| Preset        | Rule ID       | Supported files and directories     |
+| ------------- | ------------- | ----------------------------------- |
+| `vscode.yaml` | `vscode_root` | `.vscode/`, `*.code-workspace`      |
+| `idea.yaml`   | `idea_root`   | `.idea/`, `*.iml`, `*.ipr`, `*.iws` |
+| `zed.yaml`    | `zed_root`    | `.zed/`                             |
+
+#### CI/CD
+
+All paths below are relative to `node_modules/project-lint/extends/ci-cd/`. Each preset is independent. Configuration directories allow their contents without imposing a pipeline structure.
+
+| Preset           | Rule ID          | Supported files and directories                                                                  |
+| ---------------- | ---------------- | ------------------------------------------------------------------------------------------------ |
+| `gitlab.yaml`    | `gitlab_root`    | `.gitlab-ci.yml`, `.gitlab-ci.yaml`, `.gitlab/`                                                  |
+| `github.yaml`    | `github_root`    | `.github/`, including workflows and repository metadata                                          |
+| `bitbucket.yaml` | `bitbucket_root` | `bitbucket-pipelines.yml`                                                                        |
+| `circleci.yaml`  | `circleci_root`  | `.circleci/`                                                                                     |
+| `jenkins.yaml`   | `jenkins_root`   | `Jenkinsfile`, `Jenkinsfile.*`                                                                   |
+| `drone.yaml`     | `drone_root`     | `.drone.yml`, `.drone.yaml`, `.drone.jsonnet`, `.drone.star`                                     |
+| `travis.yaml`    | `travis_root`    | `.travis.yml`                                                                                    |
+| `teamcity.yaml`  | `teamcity_root`  | `.teamcity/`                                                                                     |
+| `bamboo.yaml`    | `bamboo_root`    | `bamboo-specs/`                                                                                  |
+| `buddy.yaml`     | `buddy_root`     | `.buddy.yml`, `buddy.yml`, `.buddy/`                                                             |
+| `codeship.yaml`  | `codeship_root`  | `codeship-services.yml`, `codeship-steps.yml`                                                    |
+| `gocd.yaml`      | `gocd_root`      | `*.gocd.yml`, `*.gocd.yaml`, `*.gocd.json`                                                       |
+| `wercker.yaml`   | `wercker_root`   | `wercker.yml`                                                                                    |
+| `semaphore.yaml` | `semaphore_root` | `.semaphore/`                                                                                    |
+| `nevercode.yaml` | `nevercode_root` | `nevercode.yml`                                                                                  |
+| `spinnaker.yaml` | `spinnaker_root` | `.spinnaker/`, `spinnaker/` (conventions; Spinnaker has no universal repository config filename) |
+| `buildbot.yaml`  | `buildbot_root`  | `master.cfg`, `buildbot.tac`                                                                     |
 
 ### `root: <Rule[]>` <a id="root"></a>
 
@@ -423,6 +530,20 @@ Will expect the following:
 ## Configuration file
 
 It is YAML by default and must be called `.projectlintrc`. But you may use `json` syntax instead.
+
+## Development
+
+```bash
+npm ci
+npm run build
+npm test -- --runInBand
+npm run ci.typecheck
+npm run ci.eslint -- src eslint.config.js jest.config.ts lint-staged.config.cjs
+npm run ci.prettier -- --check .
+npm start -- -s
+```
+
+TypeScript stays on the latest 5.x release to match the schema generator's compiler. ESLint uses flat configuration and the maintained `eslint-plugin-import-x` plugin.
 
 ## Contrubution
 

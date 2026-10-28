@@ -1,0 +1,5 @@
+rules:
+  bamboo_root:
+    - name: bamboo-specs
+      type: dir
+      ignoreChildren: true

@@ -1,0 +1,16 @@
+extends: ./node.yaml
+
+rules:
+  yarn_root:
+    - ruleId: node_root
+    - name: yarn.lock
+      type: file
+    - name: /^\.yarnrc(\.yml)?$/
+      type: file
+    - name: /^\.pnp\.(js|cjs|loader\.mjs)$/
+      type: file
+    - name: .pnp.data.json
+      type: file
+    - name: .yarn
+      type: dir
+      ignoreChildren: true

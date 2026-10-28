@@ -1,0 +1,4 @@
+rules:
+  webpack_root:
+    - name: /^webpack.*\.(js|mjs|cjs|ts|mts|cts)$/
+      type: file

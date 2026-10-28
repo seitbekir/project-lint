@@ -1,0 +1,4 @@
+rules:
+  vite_root:
+    - name: /^vite\.config\.(js|mjs|cjs|ts|mts|cts)$/
+      type: file

@@ -1,0 +1,4 @@
+rules:
+  biome_root:
+    - name: /^biome\.jsonc?$/
+      type: file

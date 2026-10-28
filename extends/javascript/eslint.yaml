@@ -1,0 +1,10 @@
+rules:
+  eslint_root:
+    - name: /^\.eslintrc(\..*)?$/
+      type: file
+    - name: /^eslint\.config(\..*)?\.(js|mjs|cjs|ts|mts|cts)$/
+      type: file
+    - name: .eslintignore
+      type: file
+    - name: .eslintcache
+      type: file

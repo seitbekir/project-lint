@@ -1,0 +1,4 @@
+rules:
+  bitbucket_root:
+    - name: bitbucket-pipelines.yml
+      type: file

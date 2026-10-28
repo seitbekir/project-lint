@@ -1,0 +1,9 @@
+extends: ./husky.yaml
+
+rules:
+  lintstaged_root:
+    - name: /^\.lintstagedrc(\.(json|yaml|yml|mjs|cjs|js|ts|mts|cts))?$/
+      type: file
+    - name: /^lint-staged\.config\.(mjs|cjs|js|ts|mts|cts)$/
+      type: file
+    - ruleId: husky_root

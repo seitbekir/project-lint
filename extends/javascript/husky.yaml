@@ -1,0 +1,5 @@
+rules:
+  husky_root:
+    - name: .husky
+      type: dir
+      ignoreChildren: true

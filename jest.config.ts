@@ -2,6 +2,10 @@ import type { JestConfigWithTsJest } from 'ts-jest';
 
 const jestConfig: JestConfigWithTsJest = {
   preset: 'ts-jest',
+  transform: {
+    '^.+\\.[tj]sx?$': ['ts-jest', { tsconfig: { allowJs: true } }],
+  },
+  transformIgnorePatterns: ['node_modules/(?!commander/)'],
   testEnvironment: 'node',
   globals: { NODE_ENV: 'test' },
   clearMocks: true,

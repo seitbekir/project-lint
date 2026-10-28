@@ -1,0 +1,4 @@
+rules:
+  editorconfig_root:
+    - name: .editorconfig
+      type: file

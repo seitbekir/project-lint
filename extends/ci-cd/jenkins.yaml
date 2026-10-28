@@ -1,0 +1,4 @@
+rules:
+  jenkins_root:
+    - name: /^Jenkinsfile(\..*)?$/
+      type: file

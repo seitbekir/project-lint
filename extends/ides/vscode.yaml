@@ -1,0 +1,7 @@
+rules:
+  vscode_root:
+    - name: .vscode
+      type: dir
+      ignoreChildren: true
+    - name: /^.*\.code-workspace$/
+      type: file

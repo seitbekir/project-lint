@@ -1,0 +1,4 @@
+rules:
+  rsbuild_root:
+    - name: /^rsbuild\.config\.(js|mjs|cjs|ts|mts|cts)$/
+      type: file

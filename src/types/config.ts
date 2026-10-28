@@ -51,7 +51,7 @@ export type DedicatedRules = {
   /**
    * Rules by id
    */
-  [ruleId: string]: RuleMapped[];
+  [ruleId: string]: Rule[];
 };
 
 export type ProjectLintConfig = {

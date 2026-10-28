@@ -1,0 +1,13 @@
+extends: ./node.yaml
+
+rules:
+  pnpm_root:
+    - ruleId: node_root
+    - name: pnpm-lock.yaml
+      type: file
+    - name: pnpm-workspace.yaml
+      type: file
+    - name: /^\.?pnpmfile\.cjs$/
+      type: file
+    - name: .npmrc
+      type: file

@@ -1,0 +1,6 @@
+rules:
+  ts_root:
+    - name: /^tsconfig(\..*)?\.json$/
+      type: file
+    - name: /^.*\.tsbuildinfo$/
+      type: file

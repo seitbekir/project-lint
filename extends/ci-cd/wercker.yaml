@@ -1,0 +1,4 @@
+rules:
+  wercker_root:
+    - name: wercker.yml
+      type: file

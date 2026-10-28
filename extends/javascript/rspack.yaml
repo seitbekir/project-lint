@@ -1,0 +1,4 @@
+rules:
+  rspack_root:
+    - name: /^rspack\.config\.(js|mjs|cjs|ts|mts|cts)$/
+      type: file

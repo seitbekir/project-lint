@@ -1,0 +1,7 @@
+rules:
+  moon_root:
+    - name: /^moon\.(yml|yaml|json)$/
+      type: file
+    - name: .moon
+      type: dir
+      ignoreChildren: true

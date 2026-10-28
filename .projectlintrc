@@ -7,21 +7,41 @@ ignorePatterns:
   - .husky
   - .git
 
-extends: extends/node.yml
+extends:
+  - extends/basic.yaml
+  - extends/projectlint.yaml
+  - extends/javascript/jest.yaml
+  - extends/editorconfig.yaml
+  - extends/ides/vscode.yaml
+  - extends/ides/idea.yaml
+  - extends/ides/zed.yaml
+  - extends/javascript/typescript.yaml
+  - extends/javascript/eslint.yaml
+  - extends/javascript/prettier.yaml
+  - extends/javascript/npm.yaml
+  - extends/javascript/nvm.yaml
+  - extends/git.yaml
+  - extends/javascript/lint-staged.yaml
+  - extends/ci-cd/github.yaml
 
 root:
   - ruleId: index_file
   - ruleId: jest_folder
   - ruleId: project_root
   - ruleId: lintstaged_root
-  - ruleId: github_folder
+  - ruleId: github_root
   - name: projectlintrc.schema.json
     type: file
   - name: extends
     type: dir
     children:
-      - name: /^${{camelCase}}.(yml|yaml|json)$/
+      - name: /^${{kebab-case}}\.yaml$/
         type: file
+      - name: /^(javascript|typescript|ci-cd|ides)$/
+        type: dir
+        children:
+          - name: /^${{kebab-case}}\.yaml$/
+            type: file
   - name: src
     type: dir
     children:
@@ -72,24 +92,16 @@ rules:
     - name: __mocks__
       type: dir
       ignoreChildren: true
-  github_folder:
-    - name: .github
-      type: dir
-      children:
-        - name: workflows
-          type: dir
-          children:
-            - name: pull_request.yml
-              type: file
-            - name: npm_publish.yml
-              type: file
 
   # My rules
   project_root:
     - ruleId: basic_root
     - ruleId: projectlint_root
     - ruleId: jest_root
-    - ruleId: ide_roots
+    - ruleId: editorconfig_root
+    - ruleId: vscode_root
+    - ruleId: idea_root
+    - ruleId: zed_root
     - ruleId: ts_root
     - ruleId: eslint_root
     - ruleId: prettier_root

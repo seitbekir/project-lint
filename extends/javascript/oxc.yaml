@@ -1,0 +1,14 @@
+rules:
+  oxc_root:
+    - ruleId: oxlint_root
+    - ruleId: oxfmt_root
+  oxlint_root:
+    - name: /^\.oxlintrc\.jsonc?$/
+      type: file
+    - name: /^oxlint\.config\.(ts|mts)$/
+      type: file
+  oxfmt_root:
+    - name: /^\.oxfmtrc\.jsonc?$/
+      type: file
+    - name: /^oxfmt\.config\.(ts|mts)$/
+      type: file

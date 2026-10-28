@@ -6,7 +6,7 @@
       "additionalProperties": {
         "description": "Rules by id",
         "items": {
-          "$ref": "#/definitions/RuleMapped"
+          "$ref": "#/definitions/Rule"
         },
         "type": "array"
       },
@@ -128,19 +128,6 @@
       },
       "required": ["name", "type"],
       "type": "object"
-    },
-    "RuleMapped": {
-      "anyOf": [
-        {
-          "$ref": "#/definitions/RuleAllowAny"
-        },
-        {
-          "$ref": "#/definitions/RuleFile"
-        },
-        {
-          "$ref": "#/definitions/RuleDir"
-        }
-      ]
     },
     "RuleRuleId": {
       "additionalProperties": false,

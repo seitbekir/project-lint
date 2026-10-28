@@ -1,0 +1,5 @@
+rules:
+  zed_root:
+    - name: .zed
+      type: dir
+      ignoreChildren: true

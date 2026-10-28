@@ -1,0 +1,7 @@
+rules:
+  idea_root:
+    - name: .idea
+      type: dir
+      ignoreChildren: true
+    - name: /^.*\.(iml|ipr|iws)$/
+      type: file

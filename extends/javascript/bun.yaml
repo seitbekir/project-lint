@@ -1,0 +1,13 @@
+extends: ./node.yaml
+
+rules:
+  bun_root:
+    - ruleId: node_root
+    - name: bunfig.toml
+      type: file
+    - name: bun.lock
+      type: file
+    - name: bun.lockb
+      type: file
+    - name: bun-lock.json
+      type: file

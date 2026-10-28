@@ -1,0 +1,7 @@
+rules:
+  jest_root:
+    - name: coverage
+      type: dir
+      ignoreChildren: true
+    - name: /^jest\..*\.(js|mjs|cjs|ts|mts|cts|json)$/
+      type: file
