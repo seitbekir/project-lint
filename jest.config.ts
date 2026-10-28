@@ -14,7 +14,7 @@ const jestConfig: JestConfigWithTsJest = {
     '@/(.*)$': '<rootDir>/src/$1',
   },
   testMatch: ['<rootDir>/src/**/__tests__/*.ts'],
-  coverageReporters: ['lcov', 'text'],
+  coverageReporters: ['lcov', 'text', 'cobertura'],
 };
 
 export default jestConfig;
